@@ -82,6 +82,11 @@ abstract class AbstractSignedMdElement extends AbstractMdElement implements
         }
 
         $e = $this->toUnsignedXML($parent);
+if (method_exists(static::class, 'getXsiTypePrefix')) {
+        $e->setAttributeNS(
+            'http://www.w3.org/2000/xmlns/','xmlns:' . static::getXsiTypePrefix(), static::getXsiTypeNamespaceURI()
+        );
+}
 
         if ($this->signer !== null) {
             $signedXML = $this->doSign($e);
